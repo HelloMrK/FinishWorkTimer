@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>下班倒计时</title>
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.slim.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/popper.js/2.11.8/cjs/popper.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.1/js/bootstrap.min.js"></script>
+    <script>
+        function countdown() {
+            const targetDate = new Date();
+            // 下班时间设置
+            targetDate.setHours(17);
+            targetDate.setMinutes(30);
+            targetDate.setSeconds(0)
+            const diff = targetDate - new Date();
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById("hours").innerHTML = hours;
+            document.getElementById("minutes").innerHTML = minutes;
+            document.getElementById("seconds").innerHTML = seconds;
+        }
+
+        setInterval(countdown, 1000);
+    </script>
+</head>
+
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">下班倒计时</h5>
+                <p class="card-text">
+                    <span id="hours" class="display-4 font-weight-bold"></span> <span
+                        class="font-weight-light">小时</span>
+                    <span id="minutes" class="display-4 font-weight-bold"></span> <span
+                        class="font-weight-light">分</span>
+                    <span id="seconds" class="display-4 font-weight-bold"></span> <span
+                        class="font-weight-light">秒</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
