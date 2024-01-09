@@ -9,41 +9,65 @@
     <script src="./js/popper.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
     <script>
+        let countdownInterval;
+        let targetDate;
+        // 默认18点下班
+        targetDate = new Date();
+        targetDate.setHours(18);
+        targetDate.setMinutes(0);
+        targetDate.setSeconds(0);
+
+        function formatTime(date) {
+            // 格式化时间为 "HH:mm" 形式
+            return date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0');
+        }
+
         function countdown() {
-            const targetDate = new Date();
-            // 下班时间设置
-            targetDate.setHours(18);
-            targetDate.setMinutes(0);
-            targetDate.setSeconds(0)
-            const diff = targetDate - new Date();
+            const currentDate = new Date();
+            const diff = targetDate - currentDate;
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
             document.getElementById("hours").innerHTML = hours;
             document.getElementById("minutes").innerHTML = minutes;
             document.getElementById("seconds").innerHTML = seconds;
+
+            // 更新 finishTime 元素
+            document.getElementById("finishTime").innerHTML = formatTime(targetDate);
         }
 
         function setClosingTime() {
-            const closingHour = prompt("请输入下班小时（24小时制）：");
-            const closingMinute = prompt("请输入下班分钟：");
+            clearInterval(countdownInterval); // 停止之前的倒计时定时器
+            let closingHour = prompt("请输入下班小时（24小时制）：");
+            let closingMinute = prompt("请输入下班分钟：");
+            if (!closingHour) {
+                closingHour = 18;
+            }
+            if (!closingMinute) {
+                closingMinute = 0;
+            }
+            // 输入验证
+            closingHour = parseInt(closingHour);
+            closingMinute = parseInt(closingMinute);
 
-            const targetDate = new Date();
-            targetDate.setHours(parseInt(closingHour));
-            targetDate.setMinutes(parseInt(closingMinute));
+            // 验证输入是否为有效数字
+            if (isNaN(closingHour) || isNaN(closingMinute) || closingHour < 0 || closingHour > 23 || closingMinute < 0 || closingMinute > 59) {
+                alert("请输入有效的小时和分钟");
+                return;
+            }
+
+            targetDate = new Date();
+            targetDate.setHours(closingHour);
+            targetDate.setMinutes(closingMinute);
             targetDate.setSeconds(0);
 
-            const diff = targetDate - new Date();
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            // 计算新的倒计时时间
+            countdown();
 
-            document.getElementById("hours").innerHTML = hours;
-            document.getElementById("minutes").innerHTML = minutes;
-            document.getElementById("seconds").innerHTML = seconds;
+            countdownInterval = setInterval(countdown, 1000); // 重新启动倒计时定时器
         }
 
-        setInterval(countdown, 1000);
+        countdownInterval = setInterval(countdown, 1000);
     </script>
 </head>
 
@@ -52,6 +76,7 @@
         <div class="card text-center">
             <div class="card-body">
                 <h5 class="card-title">下班倒计时</h5>
+                <h6 id="finishTime"></h6>
                 <p class="card-text">
                     <span id="hours" class="display-4 font-weight-bold"></span> <span
                         class="font-weight-light">小时</span>
