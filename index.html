@@ -23,6 +23,25 @@
             document.getElementById("seconds").innerHTML = seconds;
         }
 
+        function setClosingTime() {
+            const closingHour = prompt("请输入下班小时（24小时制）：");
+            const closingMinute = prompt("请输入下班分钟：");
+
+            const targetDate = new Date();
+            targetDate.setHours(parseInt(closingHour));
+            targetDate.setMinutes(parseInt(closingMinute));
+            targetDate.setSeconds(0);
+
+            const diff = targetDate - new Date();
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById("hours").innerHTML = hours;
+            document.getElementById("minutes").innerHTML = minutes;
+            document.getElementById("seconds").innerHTML = seconds;
+        }
+
         setInterval(countdown, 1000);
     </script>
 </head>
@@ -40,6 +59,7 @@
                     <span id="seconds" class="display-4 font-weight-bold"></span> <span
                         class="font-weight-light">秒</span>
                 </p>
+                <button class="btn btn-primary" onclick="setClosingTime()">设置下班时间(默认五点半)</button>
             </div>
         </div>
     </div>
