@@ -57,7 +57,7 @@
 
         function setClosingTime() {
             clearInterval(countdownInterval); // 停止之前的倒计时定时器
-            let closingHour = prompt("请输入下班小时（24小时制）：");
+            let closingHour = prompt("请输入下班小时（24小时制）(使用cookie,一般只需要设置一次)：");
             let closingMinute = prompt("请输入下班分钟：");
             if (!closingHour) {
                 closingHour = 18;
@@ -112,6 +112,43 @@
 
         countdownInterval = setInterval(countdown, 1000);
     </script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            flex: 1;
+            margin-top: 50px;
+        }
+
+        .card {
+            border: none;
+        }
+
+        .card-title {
+            font-size: 24px;
+        }
+
+        .card-text {
+            font-size: 18px;
+        }
+
+        .btn-primary {
+            font-size: 18px;
+        }
+
+        footer {
+            padding: 20px;
+            background-color: #343a40;
+            color: #ffffff;
+            margin-top: auto;
+        }
+    </style>
 </head>
 
 <body class="bg-light">
@@ -133,6 +170,11 @@
             </div>
         </div>
     </div>
+    <!-- 页脚部分 -->
+    <footer class="text-center">
+        <p style="margin-bottom: 0;">Author:KLee , GitHub: <a href="https://github.com/HelloMrK/FinishWorkTimer/" target="_blank"
+                style="color: #ffffff; text-decoration: underline;">https://github.com/HelloMrK/FinishWorkTimer/</a></p>
+    </footer>
 </body>
 
 </html>
