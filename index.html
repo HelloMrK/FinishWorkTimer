@@ -19,11 +19,6 @@
         if (storedClosingTime) {
             targetDate = new Date(storedClosingTime);
         } else {
-            // 没有cookie时，默认18点下班
-            targetDate = new Date();
-            targetDate.setHours(18);
-            targetDate.setMinutes(0);
-            targetDate.setSeconds(0);
             // 弹出设置下班时间的提示
             setClosingTime();
         }
